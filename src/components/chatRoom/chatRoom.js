@@ -9,6 +9,15 @@ import { getFirestore, collection, query, orderBy, limit, addDoc, serverTimestam
 
 import { useCollectionData } from 'react-firebase-hooks/firestore';
 
+import ReactCountryFlag from "react-country-flag";
+
+const flagToLanguageMap = {
+  de: "de",
+  fr: "fr",
+  es: "es",
+  us: "en",
+};
+
 const firebaseConfig = {
   apiKey: "AIzaSyCEEjd8s98FSO8ymagdNVs474LoGVX6aWI",
   authDomain: "hiero-30f14.firebaseapp.com",
@@ -22,6 +31,8 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 const auth = getAuth(app);
+
+const defaultLanguage = "en"; // TODO: create custom setting for this?
 
 const postConverter = {
   toFirestore(post) {
@@ -43,6 +54,9 @@ function ChatRoom() {
   const messagesRef = collection(db, 'messages').withConverter(postConverter);
   const q = query(messagesRef, orderBy('createdAt'), limit(25));
   const [messageDocs] = useCollectionData(q);
+
+  // initialize language
+  const [globalLanguage, setGlobalLanguage] = useState(defaultLanguage);
 
   // initialize form
   const [formValue, setFormValue] = useState('');
@@ -66,8 +80,28 @@ function ChatRoom() {
 
   return (
     <>
+      <header>
+        {flagToLanguageMap && Object.entries(flagToLanguageMap).map((lang) => {
+          return (
+            <ReactCountryFlag 
+              key={lang[0]}
+              id={lang[0]}
+              countryCode={lang[0]}
+              className="language-icon" 
+              aria-label={lang[1]}
+              onClick={(e) => setGlobalLanguage(flagToLanguageMap[e.currentTarget.id])}
+            /> 
+          )
+        })}
+      </header>
       <main>
-        {messageDocs && messageDocs.map((messageDoc) => <ChatMessage key={messageDoc.id} message={messageDoc.message} />)}
+        {messageDocs && messageDocs.map((messageDoc) => 
+          <ChatMessage 
+            key={messageDoc.id} 
+            message={messageDoc.message} 
+            globalLanguage={globalLanguage}
+          />
+        )}
 
         <div ref={dummy}></div>
       </main>
