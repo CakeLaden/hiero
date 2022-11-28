@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import './chatMessage.css';
 
 import OverlayTrigger from 'react-bootstrap/OverlayTrigger';
@@ -16,6 +16,8 @@ const flagToLanguageMap = {
   us: "en",
 };
 
+const defaultLanguage = "en"; // TODO: make this a custom setting
+
 const firebaseConfig = {
   apiKey: "AIzaSyCEEjd8s98FSO8ymagdNVs474LoGVX6aWI",
   authDomain: "hiero-30f14.firebaseapp.com",
@@ -30,13 +32,18 @@ const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 
 function ChatMessage(props) {
-  const { original, translated, uid, photoURL } = props.message;
+  const { globalLanguage } = props;
+  const { translated, uid, photoURL } = props.message;
 
   const sentByUser = uid === auth.currentUser.uid;
 
   const messageClass = sentByUser ? 'sent' : 'received';
 
-  const [displayText, setDisplayText] = useState(original);
+  const [displayText, setDisplayText] = useState(translated[globalLanguage]);
+
+  useEffect(() => {
+    setDisplayText(translated[globalLanguage]);
+  }, [translated, globalLanguage]);
 
   const handleFlagClick = (event) => {
     const clickedIconId = event.currentTarget.id;
