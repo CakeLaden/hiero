@@ -52,6 +52,7 @@ function ChatMessage(props) {
               className="language-icon" 
               aria-label={lang[1]}
               onClick={handleFlagClick}
+              role="button"
             /> 
           )
         })}
@@ -60,7 +61,7 @@ function ChatMessage(props) {
   );
 
   return (
-    <div className={`message ${messageClass}`}>
+    <div className={`message ${messageClass}`} role="button">
       {photoURL && <img src={photoURL} referrerPolicy="no-referrer" alt="" />}
       <OverlayTrigger trigger="click" placement={sentByUser ? "left" : "right"} overlay={actionsPopover} rootClose>
         <p>{displayText}</p>

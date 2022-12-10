@@ -75,6 +75,7 @@ function ChatRoom() {
               className="language-icon" 
               aria-label={lang[1]}
               onClick={(e) => setGlobalLanguage(flagToLanguageMap[e.currentTarget.id])}
+              role="button"
             /> 
           )
         })}
