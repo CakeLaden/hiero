@@ -66,19 +66,23 @@ function ChatRoom() {
   return (
     <>
       <header>
-        {flagToLanguageMap && Object.entries(flagToLanguageMap).map((lang) => {
-          return (
-            <ReactCountryFlag 
-              key={lang[0]}
-              id={lang[0]}
-              countryCode={lang[0]}
-              className="language-icon" 
-              aria-label={lang[1]}
-              onClick={(e) => setGlobalLanguage(flagToLanguageMap[e.currentTarget.id])}
-              role="button"
-            /> 
-          )
-        })}
+      <div>
+          {/* TODO: insert globe icon --> flagToLanguageMap && <span class="language-icon">LANG:</span> */}
+          {flagToLanguageMap && Object.entries(flagToLanguageMap).map((lang) => {
+            return (
+              <ReactCountryFlag 
+                key={lang[0]}
+                id={lang[0]}
+                countryCode={lang[0]}
+                className="language-icon" 
+                aria-label={lang[1]}
+                onClick={(e) => setGlobalLanguage(flagToLanguageMap[e.currentTarget.id])}
+                role="button"
+              /> 
+            )
+          })}
+        </div>
+        <div>{/* Profile / settings? */}</div>
       </header>
       <main>
         {messageDocs && messageDocs.map((messageDoc) => 
