@@ -21,7 +21,7 @@ const defaultLanguage = "en"; // TODO: create custom setting for this?
 
 const postConverter = {
   toFirestore(post) {
-    return { author: post.author, title: post.title };
+    return post;
   },
   fromFirestore(snapshot, options) {
     const data = snapshot.data(options);
