@@ -15,23 +15,27 @@ const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 
 function ChatMessage(props) {
-  const { globalLanguage } = props;
-  const { translated, uid, photoURL } = props.message;
+  const { globalLanguage, message } = props;
+  const { translated, uid, photoURL } = message;
 
   const sentByUser = uid === auth.currentUser.uid;
 
   const messageClass = sentByUser ? 'sent' : 'received';
 
-  const [displayText, setDisplayText] = useState(translated[globalLanguage]);
+  const getDefaultTextFromMessage = (msg) => msg?.translated?.[globalLanguage] ?? msg.original;
 
+  const [displayText, setDisplayText] = useState(getDefaultTextFromMessage(message));
+
+  /* used when chat room updates the global language */
   useEffect(() => {
-    setDisplayText(translated[globalLanguage]);
+    setDisplayText(getDefaultTextFromMessage(message));
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [translated, globalLanguage]);
 
   const handleFlagClick = (event) => {
     const clickedIconId = event.currentTarget.id;
 
-    if (flagToLanguageMap[clickedIconId]) {
+    if (flagToLanguageMap[clickedIconId] && translated?.[flagToLanguageMap[clickedIconId]]) {
       setDisplayText(translated[flagToLanguageMap[clickedIconId]]);
     }
 
