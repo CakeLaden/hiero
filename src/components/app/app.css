@@ -10,7 +10,7 @@ body {
 
 .App header {
   background-color: #181717;
-  height: 10vh;
+  height: 7.5vh; /*10vh;*/
   min-height: 50px;
   color: white;
   position: fixed;
