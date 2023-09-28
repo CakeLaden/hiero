@@ -9,6 +9,9 @@ import { getFirestore, collection, query, orderBy, limit, addDoc, serverTimestam
 
 import { useCollectionData } from 'react-firebase-hooks/firestore';
 
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faEarthAmericas } from '@fortawesome/free-solid-svg-icons';
+
 import ReactCountryFlag from "react-country-flag";
 
 import { flagToLanguageMap, firebaseConfig } from "../../utilities/constants";
@@ -67,7 +70,7 @@ function ChatRoom() {
     <>
       <header>
       <div>
-          {/* TODO: insert globe icon --> flagToLanguageMap && <span class="language-icon">LANG:</span> */}
+          {flagToLanguageMap && <FontAwesomeIcon icon={faEarthAmericas} className="language-menu-icon" />}
           {flagToLanguageMap && Object.entries(flagToLanguageMap).map((lang) => {
             return (
               <ReactCountryFlag 

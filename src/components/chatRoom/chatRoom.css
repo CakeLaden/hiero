@@ -3,6 +3,13 @@ header {
   flex-direction: row;
 }
 
+header .language-menu-icon {
+  height: 1.25em;
+  padding-right: 10px;
+  border-right: solid white 2px; 
+  vertical-align: middle;
+}
+
 header .language-icon {
   margin: 0 10px;
 }
